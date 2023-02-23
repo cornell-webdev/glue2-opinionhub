@@ -10,7 +10,7 @@
 	import scrapeCommentsByQueryString from '$lib/util/scrapeCommentsByQueryString';
 	import { onMount } from 'svelte';
 
-	let queryString = 'cs 4300';
+	let queryString = '';
 	let sort = 'upvotes';
 	let query;
 	let comments = [];
