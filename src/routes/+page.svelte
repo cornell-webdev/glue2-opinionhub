@@ -9,6 +9,7 @@
 	import dynamicAgo from '$lib/util/glue/dynamicAgo';
 	import scrapeCommentsByQueryString from '$lib/util/scrapeCommentsByQueryString';
 	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
 
 	let queryString = '';
 	let sort = 'upvotes';
@@ -88,10 +89,15 @@
 							{comment?.upvotes} upvotes • {dynamicAgo({
 								date: new Date(comment?.providerCreated),
 								formatString: 'y-MM-dd'
-							})} •
-							<a target="_blank" rel="noreferrer" href={comment?.providerUrl} class="link"
-								>See on Reddit</a
-							>
+							})}
+							{#if dev}
+								<span>
+									•
+									<a target="_blank" rel="noreferrer" href={comment?.providerUrl} class="link"
+										>See on Reddit</a
+									>
+								</span>
+							{/if}
 						</p>
 					</div>
 				</div>
