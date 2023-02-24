@@ -1,0 +1,74 @@
+<script lang="ts">
+	import { currentUser } from '$lib/glue/pocketbase';
+	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
+	import dynamicAgo from '$lib/util/glue/dynamicAgo';
+	import sentimentToStars from '$lib/util/sentimentToStars';
+	import RequireAuthButton from './glue/RequireAuthButton.svelte';
+
+	export let comment;
+
+	const toggleHelpfulComment = async (commentId: string) => {
+		if (userCommentIdToHelpfulId[commentId]) {
+			// unmark helpful
+			comments = comments?.map((comment) => {
+				if (comment?.id !== commentId) return comment;
+				return {
+					...comment,
+					helpful: comment?.helpful - 1
+				};
+			});
+			pb.collection('users_comments_helpful').delete(userCommentIdToHelpfulId[commentId]);
+			delete userCommentIdToHelpfulId[commentId];
+		} else {
+			// mark helpful
+			userCommentIdToHelpfulId[commentId] = true;
+			comments = comments?.map((comment) => {
+				if (comment?.id !== commentId) return comment;
+				return {
+					...comment,
+					helpful: comment?.helpful + 1
+				};
+			});
+			const userCommentHelpful = await pb.collection('users_comments_helpful').create({
+				user: $currentUser?.id,
+				comment: commentId
+			});
+			userCommentIdToHelpfulId[commentId] = userCommentHelpful?.id;
+		}
+	};
+</script>
+
+{#if comment}
+	<div class="my-2 space-y-3 border-b border-base-content/20 py-4 px-2">
+		<div class="flex items-center space-x-3">
+			<div class="rating rating-sm">
+				{#each [1, 2, 3, 4, 5] as stars}
+					<input
+						type="radio"
+						name={`comment-rating-${comment?.id}`}
+						class="mask mask-star-2 bg-yellow-400"
+						checked={stars ===
+							sentimentToStars({
+								sentimentScore: comment?.sentimentScore,
+								sentimentMagnitude: comment?.sentimentMagnitude
+							})}
+					/>
+				{/each}
+			</div>
+			<p class="text-sm text-base-content/80">
+				{dynamicAgo({
+					date: new Date(comment?.providerCreated),
+					formatString: 'y-MM-dd'
+				})}
+			</p>
+		</div>
+		<p class="whitespace-pre-line">{comment?.content}</p>
+		<RequireAuthButton
+			class="btn-outline btn-success btn-xs btn gap-1"
+			on:click={() => {
+				toggleHelpfulComment(comment?.id);
+			}}
+			><span class="text-lg"><IconUpArrow /></span> {comment?.helpful} Helpful
+		</RequireAuthButton>
+	</div>
+{/if}
