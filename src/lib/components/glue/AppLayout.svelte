@@ -2,6 +2,7 @@
 	import Auth from '$lib/components/glue/Auth.svelte';
 	import MobileDrawerContent from '$lib/components/glue/MobileDrawerContent.svelte';
 	import { APP_NAME, IS_BETA, PUBLIC_NAVS } from '$lib/glue/config';
+	import CourseSearch from '../CourseSearch.svelte';
 	import './app.css';
 	import FeedbackModal from './FeedbackModal.svelte';
 </script>
@@ -71,6 +72,9 @@
 							</div>
 							<Auth />
 						</div>
+					</div>
+					<div class="p-6 pt-0">
+						<CourseSearch />
 					</div>
 				</div>
 			</div>
