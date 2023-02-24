@@ -18,7 +18,12 @@
 </script>
 
 <div class="dropdown w-full">
-	<TextInput bind:value={queryString} tabindex={0} />
+	<TextInput
+		bind:value={queryString}
+		tabindex={0}
+		class="rounded-full"
+		placeholder="Search for a course"
+	/>
 	<ul tabindex="0" class="dropdown-content menu rounded-box mt-2 w-full bg-base-200 p-2 shadow">
 		{#if suggestedCourses && suggestedCourses?.length > 0}
 			{#each suggestedCourses as course}
