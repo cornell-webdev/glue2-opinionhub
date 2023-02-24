@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { currentUser } from '$lib/glue/pocketbase';
+	import IconBookmarkOutlined from '$lib/icons/glue/IconBookmarkOutlined.svelte';
 	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
 	import dynamicAgo from '$lib/util/glue/dynamicAgo';
 	import sentimentToStars from '$lib/util/sentimentToStars';
@@ -41,28 +42,37 @@
 </script>
 
 {#if comment}
-	<div class="my-2 space-y-3 border-b border-base-content/20 py-4">
-		<div class="flex items-center space-x-3">
-			<div class="rating rating-sm">
-				{#each [1, 2, 3, 4, 5] as stars}
-					<input
-						type="radio"
-						name={`comment-rating-${comment?.id}`}
-						class="mask mask-star-2 bg-yellow-400"
-						checked={stars ===
-							sentimentToStars({
-								sentimentScore: comment?.sentimentScore,
-								sentimentMagnitude: comment?.sentimentMagnitude
-							})}
-					/>
-				{/each}
+	<div class="my-3 space-y-2 border-b border-base-content/20 py-4">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center space-x-3">
+				<div class="rating rating-sm">
+					{#each [1, 2, 3, 4, 5] as stars}
+						<input
+							type="radio"
+							name={`comment-rating-${comment?.id}`}
+							class="mask mask-star-2 bg-yellow-400"
+							checked={stars ===
+								sentimentToStars({
+									sentimentScore: comment?.sentimentScore,
+									sentimentMagnitude: comment?.sentimentMagnitude
+								})}
+						/>
+					{/each}
+				</div>
+				<p class="text-sm text-base-content/80">
+					{dynamicAgo({
+						date: new Date(comment?.providerCreated),
+						formatString: 'y-MM-dd'
+					})}
+				</p>
 			</div>
-			<p class="text-sm text-base-content/80">
-				{dynamicAgo({
-					date: new Date(comment?.providerCreated),
-					formatString: 'y-MM-dd'
-				})}
-			</p>
+			<RequireAuthButton
+				class="btn-success btn-outline btn-sm btn gap-1"
+				on:click={() => {
+					toggleHelpfulComment(comment?.id);
+				}}
+				><span class="text-lg"> <IconBookmarkOutlined /></span>
+			</RequireAuthButton>
 		</div>
 		<p
 			class={`cursor-pointer whitespace-pre-line ${
@@ -74,12 +84,5 @@
 		>
 			{comment?.content}
 		</p>
-		<RequireAuthButton
-			class="btn-success btn-outline btn-xs btn gap-1"
-			on:click={() => {
-				toggleHelpfulComment(comment?.id);
-			}}
-			><span class="text-lg"><IconUpArrow /></span> {comment?.helpful} Helpful
-		</RequireAuthButton>
 	</div>
 {/if}
