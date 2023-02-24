@@ -24,7 +24,7 @@
 	$: fetchCourse($page?.url?.pathname);
 </script>
 
-<PageContainer title="Home" layout="aside-main">
+<PageContainer title="Course reviews" layout="aside-main">
 	<Main>
 		<div class="space-y-8">
 			<CourseInfo {course} />
