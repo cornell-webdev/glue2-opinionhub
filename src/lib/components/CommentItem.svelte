@@ -7,6 +7,8 @@
 
 	export let comment;
 
+	let isExpanded = false;
+
 	const toggleHelpfulComment = async (commentId: string) => {
 		if (userCommentIdToHelpfulId[commentId]) {
 			// unmark helpful
@@ -62,7 +64,16 @@
 				})}
 			</p>
 		</div>
-		<p class="whitespace-pre-line">{comment?.content}</p>
+		<p
+			class={`cursor-pointer whitespace-pre-line ${
+				isExpanded ? 'line-clamp-none' : 'line-clamp-3'
+			}`}
+			on:click={() => {
+				isExpanded = !isExpanded;
+			}}
+		>
+			{comment?.content}
+		</p>
 		<RequireAuthButton
 			class="btn-success btn-outline btn-xs btn gap-1"
 			on:click={() => {
