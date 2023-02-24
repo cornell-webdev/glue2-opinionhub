@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { currentUser } from '$lib/glue/pocketbase';
 	import IconBookmarkOutlined from '$lib/icons/glue/IconBookmarkOutlined.svelte';
-	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
-	import dynamicAgo from '$lib/util/glue/dynamicAgo';
 	import sentimentToStars from '$lib/util/sentimentToStars';
+	import { formatDistanceToNowStrict } from 'date-fns';
 	import RequireAuthButton from './glue/RequireAuthButton.svelte';
 
 	export let comment;
@@ -44,7 +43,7 @@
 {#if comment}
 	<div class="my-3 space-y-2 border-b border-base-content/20 py-4">
 		<div class="flex items-center justify-between">
-			<div class="flex items-center space-x-3">
+			<div class="flex items-center space-x-2">
 				<div class="rating rating-sm">
 					{#each [1, 2, 3, 4, 5] as stars}
 						<input
@@ -60,10 +59,7 @@
 					{/each}
 				</div>
 				<p class="text-sm text-base-content/80">
-					{dynamicAgo({
-						date: new Date(comment?.providerCreated),
-						formatString: 'y-MM-dd'
-					})}
+					{formatDistanceToNowStrict(new Date(comment?.providerCreated))} ago
 				</p>
 			</div>
 			<RequireAuthButton
@@ -71,7 +67,7 @@
 				on:click={() => {
 					toggleHelpfulComment(comment?.id);
 				}}
-				><span class="text-lg"> <IconBookmarkOutlined /></span>
+				>{comment?.upvotes}<span class="text-lg"> <IconBookmarkOutlined /></span>
 			</RequireAuthButton>
 		</div>
 		<p
