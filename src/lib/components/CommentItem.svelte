@@ -39,7 +39,7 @@
 </script>
 
 {#if comment}
-	<div class="my-2 space-y-3 border-b border-base-content/20 py-4 px-2">
+	<div class="my-2 space-y-3 border-b border-base-content/20 py-4">
 		<div class="flex items-center space-x-3">
 			<div class="rating rating-sm">
 				{#each [1, 2, 3, 4, 5] as stars}
@@ -64,7 +64,7 @@
 		</div>
 		<p class="whitespace-pre-line">{comment?.content}</p>
 		<RequireAuthButton
-			class="btn-outline btn-success btn-xs btn gap-1"
+			class="btn-success btn-outline btn-xs btn gap-1"
 			on:click={() => {
 				toggleHelpfulComment(comment?.id);
 			}}

@@ -1,9 +1,7 @@
 <script>
 	import CommentItem from '$lib/components/CommentItem.svelte';
-	import { currentUser, pb } from '$lib/glue/pocketbase';
 	import getComments from '$lib/util/getComments';
 	import sortComments from '$lib/util/sortComments';
-	import { onMount } from 'svelte';
 
 	export let course;
 
@@ -38,6 +36,7 @@
 
 {#if course}
 	<div>
+		<h2 class="text-2xl font-semibold">All opinions</h2>
 		{#each comments as comment (comment?.id)}
 			<CommentItem {comment} />
 		{/each}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import CommentList from '$lib/components/CommentList.svelte';
+	import CourseInfo from '$lib/components/CourseInfo.svelte';
 	import Aside from '$lib/components/glue/Aside.svelte';
 	import Main from '$lib/components/glue/Main.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
@@ -25,7 +26,10 @@
 
 <PageContainer title="Home" layout="aside-main">
 	<Main>
-		<CommentList {course} />
+		<div class="space-y-8">
+			<CourseInfo {course} />
+			<CommentList {course} />
+		</div>
 	</Main>
 	<Aside>
 		<p>popular courses</p>
