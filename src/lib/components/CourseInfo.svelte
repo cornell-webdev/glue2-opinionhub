@@ -3,7 +3,7 @@
 </script>
 
 {#if course}
-	<div class="space-y-2">
+	<div class="space-y-4">
 		<h2 class="text-4xl font-bold">{course?.name}</h2>
 		<div>
 			<h4 class="mb-0">{course?.subtitle}</h4>
