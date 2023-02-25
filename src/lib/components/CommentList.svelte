@@ -45,11 +45,11 @@
 		<h2 class="text-2xl font-semibold">All opinions</h2>
 
 		<!-- sort select -->
-		<div>
+		<div class="form-control w-full max-w-[12rem]">
 			<label class="label">
 				<span class="label-text">Sort by</span>
 			</label>
-			<select class="select-bordered select w-full max-w-xs" bind:value={sort}>
+			<select class="select-bordered select" bind:value={sort}>
 				{#each sortOptions as option}
 					<option value={option}>{option}</option>
 				{/each}
