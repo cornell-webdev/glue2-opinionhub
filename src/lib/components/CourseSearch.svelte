@@ -18,12 +18,16 @@
 </script>
 
 <div class="dropdown w-full">
-	<TextInput
-		bind:value={queryString}
-		tabindex={0}
-		class="rounded-full"
-		placeholder="Search for a course"
-	/>
+	<div
+		class="ml-[-0.5rem] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-0.5"
+	>
+		<TextInput
+			bind:value={queryString}
+			tabindex={0}
+			class="rounded-full"
+			placeholder="Search for a course"
+		/>
+	</div>
 	<ul tabindex="0" class="dropdown-content menu rounded-box mt-2 w-full bg-base-200 p-2 shadow">
 		{#if suggestedCourses && suggestedCourses?.length > 0}
 			{#each suggestedCourses as course}
