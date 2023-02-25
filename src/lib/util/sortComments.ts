@@ -8,7 +8,7 @@ const sortComments = ({ comments, sort }) => {
 			});
 		}
 
-		case 'upvotes': {
+		case 'helpful': {
 			return comments?.sort((a, b) => {
 				const bScore = b?.helpful * 30 + b?.upvotes;
 				const aScore = a?.helpful * 30 + a?.upvotes;
