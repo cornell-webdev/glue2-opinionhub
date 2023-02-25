@@ -1,5 +1,7 @@
 <script>
 	export let course;
+
+	let isDescExpanded = false;
 </script>
 
 {#if course}
@@ -17,6 +19,20 @@
 				</p>
 			{/if}
 		</div>
-		<p class="text-sm text-base-content/70">{course?.desc}</p>
+
+		<div
+			class="cursor-pointer rounded-xl py-3 hover:bg-base-200"
+			on:click={() => {
+				isDescExpanded = !isDescExpanded;
+			}}
+		>
+			<p
+				class={`text-sm text-base-content/70 ${
+					isDescExpanded ? 'line-clamp-none' : 'line-clamp-3'
+				}`}
+			>
+				{course?.desc}
+			</p>
+		</div>
 	</div>
 {/if}
