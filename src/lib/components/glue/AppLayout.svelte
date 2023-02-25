@@ -2,9 +2,12 @@
 	import Auth from '$lib/components/glue/Auth.svelte';
 	import MobileDrawerContent from '$lib/components/glue/MobileDrawerContent.svelte';
 	import { APP_NAME, IS_BETA, PUBLIC_NAVS } from '$lib/glue/config';
+	import IconSearch from '$lib/icons/glue/IconSearch.svelte';
 	import CourseSearch from '../CourseSearch.svelte';
 	import './app.css';
 	import FeedbackModal from './FeedbackModal.svelte';
+
+	let isSearchExpanded = false;
 </script>
 
 <div class="w-screen">
@@ -17,27 +20,29 @@
 				<div class={`w-full max-w-4xl`}>
 					<div class="navbar">
 						<!-- mobile nav: hamburger -->
-						{#if PUBLIC_NAVS?.length > 0}
-							<div class="flex-none md:hidden">
-								<label for="drawer-mobile-nav" class="btn-ghost drawer-button btn-square btn">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										class="inline-block h-5 w-5 stroke-current"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M4 6h16M4 12h16M4 18h16"
-										/></svg
-									>
-								</label>
-							</div>
-						{/if}
+						<div class={`${isSearchExpanded ? 'hidden' : 'block'} md:block`}>
+							{#if PUBLIC_NAVS?.length > 0}
+								<div class="flex-none md:hidden">
+									<label for="drawer-mobile-nav" class="btn-ghost drawer-button btn-square btn">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											class="inline-block h-5 w-5 stroke-current"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M4 6h16M4 12h16M4 18h16"
+											/></svg
+										>
+									</label>
+								</div>
+							{/if}
+						</div>
 
 						<!-- app name -->
-						<div>
+						<div class={`${isSearchExpanded ? 'hidden' : 'block'} md:block`}>
 							<button>
 								<a href="/" class="btn-ghost btn text-xl normal-case"
 									>{APP_NAME}
@@ -49,18 +54,7 @@
 						</div>
 
 						<!-- right side menu -->
-						<div class="flex flex-1 justify-center">
-							<div class="hidden md:block">
-								<div class="menu menu-horizontal p-2">
-									{#if PUBLIC_NAVS?.length > 0}
-										{#each PUBLIC_NAVS as nav}
-											<li class="font-bold"><a href={nav.path}>{nav.label}</a></li>
-										{/each}
-									{/if}
-								</div>
-							</div>
-						</div>
-						<div class="flex-none">
+						<div class="flex flex-1 justify-end space-x-2">
 							<div class="hidden md:block">
 								<div class="menu menu-horizontal p-2">
 									{#if PUBLIC_NAVS?.length > 0}
@@ -70,11 +64,22 @@
 									{/if}
 								</div>
 							</div>
+
+							<!-- search -->
+							<div class={`${isSearchExpanded ? 'block' : 'hidden'} w-full md:block`}>
+								<CourseSearch />
+							</div>
+							<div class={`md:hidden ${isSearchExpanded ? 'hidden' : 'block'}`}>
+								<button
+									class=" btn-primary btn-sm btn"
+									on:click={() => {
+										isSearchExpanded = true;
+									}}><span class="text-2xl"><IconSearch /></span></button
+								>
+							</div>
+
 							<Auth />
 						</div>
-					</div>
-					<div class="p-6 pt-0">
-						<CourseSearch />
 					</div>
 				</div>
 			</div>
