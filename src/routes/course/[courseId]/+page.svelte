@@ -26,8 +26,9 @@
 
 <PageContainer title="Course reviews" layout="aside-main">
 	<Main>
-		<div class="space-y-8">
+		<div class="space-y-8 pt-6">
 			<CourseInfo {course} />
+			<div class="divider " />
 			<CommentList {course} />
 		</div>
 	</Main>
