@@ -141,8 +141,13 @@
 			</div>
 			<div class="flex flex-1 flex-col">
 				<h2 class="text-lg font-bold">Over time</h2>
-				<div class="flex flex-1 items-end space-x-3 md:hidden">
+				<div class="flex flex-1 items-end space-x-3 sm:hidden">
 					{#each starsTrend?.slice(-4) as [semesterKey, stars]}
+						<StarSemesterBar {semesterKey} {stars} />
+					{/each}
+				</div>
+				<div class="hidden flex-1 items-end space-x-3 sm:flex md:hidden">
+					{#each starsTrend?.slice(-6) as [semesterKey, stars]}
 						<StarSemesterBar {semesterKey} {stars} />
 					{/each}
 				</div>
