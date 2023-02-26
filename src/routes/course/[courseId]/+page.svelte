@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ReviewContent from '$lib/components/ReviewContent.svelte';
 	import CourseInfo from '$lib/components/CourseInfo.svelte';
 	import Aside from '$lib/components/glue/Aside.svelte';
 	import Main from '$lib/components/glue/Main.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
+	import ReviewContent from '$lib/components/ReviewContent.svelte';
 	import { pb } from '$lib/glue/pocketbase';
 
 	let course;
@@ -13,8 +13,9 @@
 		if (pathname) {
 			const courseId = pathname?.split('/')[2];
 			try {
-				course = await pb.collection('courses').getOne(courseId, {
-					// expand: 'author,searcher,post'
+				course = await pb.collection('courses').getOne(courseId);
+				pb.collection('courses').update(course?.id, {
+					pageView: course?.pageView + 1
 				});
 			} catch (error) {
 				if (error?.status !== 404) throw error;
