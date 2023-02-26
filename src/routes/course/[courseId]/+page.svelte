@@ -30,6 +30,7 @@
 			<CourseInfo {course} />
 			<div class="divider " />
 			<CommentList {course} />
+			<div class="divider " />
 		</div>
 	</Main>
 	<Aside>

@@ -42,7 +42,7 @@
 </script>
 
 {#if comment}
-	<div class="space-y-3 border-b border-base-content/20 pt-8 pb-7">
+	<div class="space-y-3 border-b border-base-content/20 pt-8 pb-7 last:border-b-0">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<div class="rating rating-sm">

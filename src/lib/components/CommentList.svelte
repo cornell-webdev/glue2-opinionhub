@@ -1,5 +1,7 @@
 <script lang="ts">
 	import CommentItem from '$lib/components/CommentItem.svelte';
+	import IconDownKarat from '$lib/icons/glue/IconDownKarat.svelte';
+	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
 	import getComments from '$lib/util/getComments';
 	import sortComments from '$lib/util/sortComments';
 	import MyOpinionButtonModal from './MyOpinionButtonModal.svelte';
@@ -9,6 +11,7 @@
 	let sort = 'helpful';
 	const sortOptions = ['helpful', 'recent'];
 	let comments = [];
+	let isExpanded = false;
 
 	const fetchComments = async (course) => {
 		const fetchedComments = await getComments({ course });
@@ -58,10 +61,34 @@
 
 			<!-- comments list -->
 			<div class="">
-				{#each comments as comment (comment?.id)}
-					<CommentItem {comment} />
-				{/each}
+				{#if isExpanded}
+					{#each comments as comment (comment?.id)}
+						<CommentItem {comment} />
+					{/each}
+				{:else}
+					{#each comments?.slice(0, 2) as comment (comment?.id)}
+						<CommentItem {comment} />
+					{/each}
+				{/if}
 			</div>
+
+			<!-- expand / collapse button -->
+			{#if comments?.length > 2}
+				<div class={`flex justify-center ${isExpanded && 'sticky bottom-12'}`}>
+					<button
+						class="btn-primary btn gap-1 rounded-full"
+						on:click={() => {
+							isExpanded = !isExpanded;
+						}}
+					>
+						{#if isExpanded}
+							<span class="text-2xl"><IconUpArrow /></span> Show less
+						{:else}
+							<span class="text-2xl"><IconDownKarat /></span> Show {comments?.length - 2} more
+						{/if}
+					</button>
+				</div>
+			{/if}
 		</div>
 	</div>
 {/if}
