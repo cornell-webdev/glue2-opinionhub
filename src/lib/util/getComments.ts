@@ -1,9 +1,9 @@
 import { pb } from '$lib/glue/pocketbase';
 import axios from 'axios';
+import type { Record } from 'pocketbase';
 
 interface IScrapeCommentsByQuery {
-	queryString: string;
-	sort: 'recent' | 'upvotes';
+	course: Record;
 }
 
 const getCourseCode = (queryString: string): string => {
