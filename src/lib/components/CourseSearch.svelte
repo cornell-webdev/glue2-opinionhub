@@ -40,8 +40,10 @@
 			{/each}
 		{:else}
 			<div class="p-2">
-				<p>No courses were found</p>
-				<p>Please search in the format SUBJECT CODE ex) cs 4701</p>
+				<p class="font-semibold">No courses were found</p>
+				<p class="text-sm text-base-content/80">
+					Please search in the format SUBJECT CODE (such as "cs 4701")
+				</p>
 			</div>
 		{/if}
 	</ul>
