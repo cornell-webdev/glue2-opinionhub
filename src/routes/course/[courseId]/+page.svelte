@@ -37,6 +37,5 @@
 	<Aside>
 		<p>recently viewed</p>
 		<p>popular courses</p>
-		<p>hot opinions</p>
 	</Aside>
 </PageContainer>
