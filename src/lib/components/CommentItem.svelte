@@ -47,9 +47,13 @@
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<!-- course -->
-				<button class="btn-primary btn-xs btn">
-					{comment?.expand?.course?.name}
-				</button>
+				{#if isShowCourse}
+					<a href="/course/{comment?.course}">
+						<button class="btn-primary btn-xs btn">
+							{comment?.expand?.course?.name}
+						</button>
+					</a>
+				{/if}
 
 				<!-- rating -->
 				<div class="rating rating-sm">
