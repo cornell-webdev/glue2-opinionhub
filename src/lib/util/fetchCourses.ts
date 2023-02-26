@@ -8,27 +8,37 @@ const fetchCourses = async () => {
 		filter: 'category="course"'
 	});
 	const courses = res;
-	// TODO: split into 20 arrays of arrays
-	// save simultaneously
-	// for (let i = 0; i < courses?.length; i++) {
-	// 	const course = courses[i];
-	// 	const { name, subtitle, desc, aliases, provider, providerId, pageView } = course;
-	// 	try {
-	// 		await pb.collection('courses').create({
-	// 			name,
-	// 			subtitle,
-	// 			desc,
-	// 			aliases,
-	// 			provider,
-	// 			providerId,
-	// 			isInitialized: false,
-	// 			pageView
-	// 		});
-	// 	} catch (error) {
-	// 		// do nothing
-	// 	}
-	// 	console.log('saved', (i / courses?.length).toFixed(2));
-	// }
+	console.log('courses', courses);
+	const chunks = [];
+	const chunkSize = 325;
+	for (let i = 0; i < courses.length; i += chunkSize) {
+		const chunk = courses.slice(i, i + chunkSize);
+		chunks.push(chunk);
+	}
+	console.log('chunks', chunks);
+	const promises = chunks?.map(async (courses, idx) => {
+		for (let i = 0; i < courses?.length; i++) {
+			const course = courses[i];
+			const { name, subtitle, desc, aliases, provider, providerId, pageView } = course;
+			try {
+				await pb.collection('courses').create({
+					name,
+					subtitle,
+					desc,
+					aliases,
+					provider,
+					providerId,
+					isInitialized: false,
+					pageView
+				});
+			} catch (error) {
+				// do nothing
+			}
+			console.log('chunk', idx, ' | saved', (i / courses?.length).toFixed(2));
+		}
+	});
+	await Promise.all(promises);
+	console.log('complete');
 };
 
 export default fetchCourses;
