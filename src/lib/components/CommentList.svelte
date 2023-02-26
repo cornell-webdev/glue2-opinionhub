@@ -2,6 +2,7 @@
 	import CommentItem from '$lib/components/CommentItem.svelte';
 	import getComments from '$lib/util/getComments';
 	import sortComments from '$lib/util/sortComments';
+	import MyOpinionButtonModal from './MyOpinionButtonModal.svelte';
 
 	export let course;
 
@@ -41,24 +42,26 @@
 </script>
 
 {#if course}
-	<div class="space-y-4">
-		<h2 class="text-2xl font-semibold">All opinions</h2>
-
-		<!-- sort select -->
-		<div class="form-control w-full max-w-[12rem]">
-			<label class="label">
-				<span class="label-text">Sort by</span>
-			</label>
-			<select class="select-bordered select" bind:value={sort}>
-				{#each sortOptions as option}
-					<option value={option}>{option}</option>
-				{/each}
-			</select>
+	<div class="space-y-6">
+		<div class="flex items-center justify-between">
+			<h2 class="text-lg font-bold">All opinions</h2>
+			<MyOpinionButtonModal />
 		</div>
 
-		<!-- comments list -->
-		{#each comments as comment (comment?.id)}
-			<CommentItem {comment} />
-		{/each}
+		<div>
+			<!-- sort select -->
+			<select class="select-bordered select select-sm ml-[-0.5rem]" bind:value={sort}>
+				{#each sortOptions as option}
+					<option value={option}>Sort by: {option}</option>
+				{/each}
+			</select>
+
+			<!-- comments list -->
+			<div class="">
+				{#each comments as comment (comment?.id)}
+					<CommentItem {comment} />
+				{/each}
+			</div>
+		</div>
 	</div>
 {/if}
