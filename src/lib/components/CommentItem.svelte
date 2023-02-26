@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { currentUser } from '$lib/glue/pocketbase';
 	import IconBookmarkOutlined from '$lib/icons/glue/IconBookmarkOutlined.svelte';
+	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
 	import sentimentToStars from '$lib/util/sentimentToStars';
 	import { formatDistanceToNowStrict } from 'date-fns';
 	import RequireAuthButton from './glue/RequireAuthButton.svelte';
@@ -41,7 +42,7 @@
 </script>
 
 {#if comment}
-	<div class="my-3 space-y-2 border-b border-base-content/20 py-4">
+	<div class="space-y-3 border-b border-base-content/20 pt-8 pb-7">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-2">
 				<div class="rating rating-sm">
@@ -58,17 +59,9 @@
 						/>
 					{/each}
 				</div>
-				<p class="text-sm text-base-content/80">
-					{formatDistanceToNowStrict(new Date(comment?.providerCreated))} ago
-				</p>
+
+				<p class="text-sm text-base-content/80">{comment?.providerData?.author}</p>
 			</div>
-			<RequireAuthButton
-				class="btn-success btn-outline btn-sm btn gap-1"
-				on:click={() => {
-					toggleHelpfulComment(comment?.id);
-				}}
-				>{comment?.upvotes}<span class="text-lg"> <IconBookmarkOutlined /></span>
-			</RequireAuthButton>
 		</div>
 		<p
 			class={`cursor-pointer whitespace-pre-line ${
@@ -80,5 +73,19 @@
 		>
 			{comment?.content}
 		</p>
+		<div class="flex items-center justify-end space-x-3">
+			<div>
+				<p class="text-sm text-base-content/80">
+					{formatDistanceToNowStrict(new Date(comment?.providerCreated))} ago
+				</p>
+			</div>
+			<RequireAuthButton
+				class="btn-success btn-outline btn-xs btn gap-1 rounded-xl"
+				on:click={() => {
+					toggleHelpfulComment(comment?.id);
+				}}
+				><IconUpArrow /> {comment?.upvotes} helpful
+			</RequireAuthButton>
+		</div>
 	</div>
 {/if}
