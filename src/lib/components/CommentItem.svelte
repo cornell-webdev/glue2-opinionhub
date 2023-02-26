@@ -7,6 +7,7 @@
 	import RequireAuthButton from './glue/RequireAuthButton.svelte';
 
 	export let comment;
+	export let isShowCourse = false;
 
 	let isExpanded = false;
 
@@ -45,6 +46,12 @@
 	<div class="space-y-3 border-b border-base-content/20 pt-8 pb-7 last:border-b-0">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-2">
+				<!-- course -->
+				<button class="btn-primary btn-xs btn">
+					{comment?.expand?.course?.name}
+				</button>
+
+				<!-- rating -->
 				<div class="rating rating-sm">
 					{#each [1, 2, 3, 4, 5] as stars}
 						<input
@@ -60,6 +67,7 @@
 					{/each}
 				</div>
 
+				<!-- author nickname -->
 				<p class="text-sm text-base-content/80">{comment?.providerData?.author}</p>
 			</div>
 		</div>
@@ -80,7 +88,7 @@
 				</p>
 			</div>
 			<RequireAuthButton
-				class="btn-success btn-outline btn-xs btn gap-1 rounded-xl"
+				class="btn-outline btn-success btn-xs btn gap-1 rounded-xl"
 				on:click={() => {
 					toggleHelpfulComment(comment?.id);
 				}}
