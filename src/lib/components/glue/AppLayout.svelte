@@ -55,7 +55,7 @@
 						</div>
 
 						<!-- app name -->
-						<div class={`${isSearchExpanded ? 'hidden' : 'block'} md:block`}>
+						<div class="{isSearchExpanded ? 'hidden' : 'block'} md:block">
 							<button>
 								<a href="/" class="btn-ghost btn text-xl normal-case"
 									>{APP_NAME}
@@ -63,6 +63,13 @@
 										<span class="ml-1.5 text-base-content/60">beta</span>
 									{/if}
 								</a>
+							</button>
+						</div>
+
+						<!-- collapsed app name (mobile only) -->
+						<div class="{isSearchExpanded ? 'block' : 'hidden'} md:hidden">
+							<button>
+								<a href="/" class="btn-ghost btn-sm btn text-xl normal-case">Op</a>
 							</button>
 						</div>
 
