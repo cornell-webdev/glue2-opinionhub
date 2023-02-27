@@ -39,7 +39,7 @@
 		{#each courses as course (course?.id)}
 			<div>
 				<a href="/course/{course?.id}">
-					<div class="rounded-xl bg-base-200 py-2 px-2 hover:bg-base-300">
+					<div class="rounded-xl bg-base-200 py-2 px-3 hover:bg-base-300">
 						<div class="flex items-center space-x-2">
 							<p class="text font-bold line-clamp-1">
 								{course?.name}
