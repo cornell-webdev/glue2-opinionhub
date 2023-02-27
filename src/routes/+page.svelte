@@ -15,7 +15,6 @@
 	</Main>
 
 	<Aside>
-		<RecentlyViewed />
 		<MostViewed />
 	</Aside>
 </PageContainer>
