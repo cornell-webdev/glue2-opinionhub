@@ -183,7 +183,7 @@
 							<CommentItem {comment} />
 						{/each}
 					{:else}
-						{#each comments?.slice(0, 2) as comment (comment?.id)}
+						{#each comments?.slice(0, 3) as comment (comment?.id)}
 							<CommentItem {comment} />
 						{/each}
 					{/if}
