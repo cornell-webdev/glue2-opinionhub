@@ -8,13 +8,15 @@
 	let page = 1;
 
 	const fetchComments = async () => {
-		const fetchedComments = (
-			await pb.collection('comments').getList(page, 20, {
-				sort: '-providerCreated',
-				expand: 'course'
-			})
-		)?.items;
-		comments = [...comments, ...fetchedComments];
+		try {
+			const fetchedComments = (
+				await pb.collection('comments').getList(page, 20, {
+					sort: '-providerCreated',
+					expand: 'course'
+				})
+			)?.items;
+			comments = [...comments, ...fetchedComments];
+		} catch (error) {}
 	};
 
 	onMount(() => {

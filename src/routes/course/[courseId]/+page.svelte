@@ -17,9 +17,7 @@
 				pb.collection('courses').update(course?.id, {
 					pageView: course?.pageView + 1
 				});
-			} catch (error) {
-				if (error?.status !== 404) throw error;
-			}
+			} catch (error) {}
 		}
 	};
 	$: fetchCourse($page?.url?.pathname);

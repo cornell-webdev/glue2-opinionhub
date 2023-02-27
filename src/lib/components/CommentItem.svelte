@@ -11,35 +11,36 @@
 
 	let isExpanded = false;
 
-	const toggleHelpfulComment = async (commentId: string) => {
-		if (userCommentIdToHelpfulId[commentId]) {
-			// unmark helpful
-			comments = comments?.map((comment) => {
-				if (comment?.id !== commentId) return comment;
-				return {
-					...comment,
-					helpful: comment?.helpful - 1
-				};
-			});
-			pb.collection('users_comments_helpful').delete(userCommentIdToHelpfulId[commentId]);
-			delete userCommentIdToHelpfulId[commentId];
-		} else {
-			// mark helpful
-			userCommentIdToHelpfulId[commentId] = true;
-			comments = comments?.map((comment) => {
-				if (comment?.id !== commentId) return comment;
-				return {
-					...comment,
-					helpful: comment?.helpful + 1
-				};
-			});
-			const userCommentHelpful = await pb.collection('users_comments_helpful').create({
-				user: $currentUser?.id,
-				comment: commentId
-			});
-			userCommentIdToHelpfulId[commentId] = userCommentHelpful?.id;
-		}
-	};
+	// TODO: helpful feature
+	// const toggleHelpfulComment = async (commentId: string) => {
+	// 	if (userCommentIdToHelpfulId[commentId]) {
+	// 		// unmark helpful
+	// 		comments = comments?.map((comment) => {
+	// 			if (comment?.id !== commentId) return comment;
+	// 			return {
+	// 				...comment,
+	// 				helpful: comment?.helpful - 1
+	// 			};
+	// 		});
+	// 		pb.collection('users_comments_helpful').delete(userCommentIdToHelpfulId[commentId]);
+	// 		delete userCommentIdToHelpfulId[commentId];
+	// 	} else {
+	// 		// mark helpful
+	// 		userCommentIdToHelpfulId[commentId] = true;
+	// 		comments = comments?.map((comment) => {
+	// 			if (comment?.id !== commentId) return comment;
+	// 			return {
+	// 				...comment,
+	// 				helpful: comment?.helpful + 1
+	// 			};
+	// 		});
+	// 		const userCommentHelpful = await pb.collection('users_comments_helpful').create({
+	// 			user: $currentUser?.id,
+	// 			comment: commentId
+	// 		});
+	// 		userCommentIdToHelpfulId[commentId] = userCommentHelpful?.id;
+	// 	}
+	// };
 </script>
 
 {#if comment}
@@ -92,7 +93,7 @@
 				</p>
 			</div>
 			<RequireAuthButton
-				class="btn-outline btn-success btn-xs btn gap-1 rounded-xl"
+				class="btn-success btn-outline btn-xs btn gap-1 rounded-xl"
 				on:click={() => {
 					toggleHelpfulComment(comment?.id);
 				}}

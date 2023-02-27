@@ -68,13 +68,15 @@ export async function POST({ request }) {
 		});
 	} catch (error) {
 		if (error?.status !== 404) {
-			pb.collection('logs').create({
-				variant: 'email-fail',
-				context: {
-					receiverId,
-					content
-				}
-			});
+			try {
+				pb.collection('logs').create({
+					variant: 'email-fail',
+					context: {
+						receiverId,
+						content
+					}
+				});
+			} catch (error) {}
 		}
 		return json({
 			isSent: false

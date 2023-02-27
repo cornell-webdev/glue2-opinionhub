@@ -6,8 +6,8 @@
 	let queryString = '';
 
 	const fetchSuggestedCourses = async (queryString: string) => {
-		if (!queryString) return;
 		try {
+			if (!queryString) return;
 			const res = await pb.collection('courses').getList(1, 5, {
 				filter: `name~"${queryString}" || aliases~"${queryString}"`
 			});
