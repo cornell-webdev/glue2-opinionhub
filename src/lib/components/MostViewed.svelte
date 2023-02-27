@@ -34,14 +34,19 @@
 </script>
 
 <div class="space-y-2">
-	<h1 class="ml-2 text-2xl font-bold">Popular courses</h1>
-	<div>
+	<h1 class="ml-2 text-2xl font-bold">Most viewed</h1>
+	<div class="space-y-1">
 		{#each courses as course (course?.id)}
 			<a href="/course/{course?.id}">
-				<div class="rounded-xl py-2 px-2 hover:bg-base-200">
-					<p class="font-medium line-clamp-1">
-						{course?.name} <span class="text-base-content/70">{course?.subtitle}</span>
-					</p>
+				<div class="space-y-1 rounded-xl py-2 px-2 hover:bg-base-200">
+					<div class="flex items-center space-x-2">
+						<button class="btn-xs btn">
+							{course?.name}
+						</button>
+						<p class="text-sm font-medium text-base-content/70 line-clamp-1">
+							{course?.subtitle}
+						</p>
+					</div>
 					<div class="flex items-center space-x-0.5 text-base-content/70">
 						<span><IconStarFilled /></span>
 						<p class="mt-0.5 text-sm">
