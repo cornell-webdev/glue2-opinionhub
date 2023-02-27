@@ -26,7 +26,7 @@
 				fetchSuggestedCourses(event?.target?.value);
 			}}
 			tabindex={0}
-			class="input-sm rounded-full md:input-md"
+			class="h-[2.5rem] rounded-full"
 			placeholder="Search for a course"
 		/>
 	</div>
