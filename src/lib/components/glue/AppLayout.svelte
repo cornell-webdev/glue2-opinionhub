@@ -7,6 +7,7 @@
 	import CourseSearch from '../CourseSearch.svelte';
 	import './app.css';
 	import FeedbackModal from './FeedbackModal.svelte';
+	import TrackWidth from './TrackWidth.svelte';
 
 	let isSearchExpanded = false;
 	let topAnchor;
@@ -17,6 +18,8 @@
 		}
 	});
 </script>
+
+<TrackWidth />
 
 <div class="w-screen">
 	<div class="drawer">
