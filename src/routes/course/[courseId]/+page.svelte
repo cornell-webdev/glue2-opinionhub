@@ -4,6 +4,8 @@
 	import Aside from '$lib/components/glue/Aside.svelte';
 	import Main from '$lib/components/glue/Main.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
+	import PopularCourses from '$lib/components/PopularCourses.svelte';
+	import RecentlyViewed from '$lib/components/RecentlyViewed.svelte';
 	import ReviewContent from '$lib/components/ReviewContent.svelte';
 	import { pb } from '$lib/glue/pocketbase';
 
@@ -33,7 +35,7 @@
 		</div>
 	</Main>
 	<Aside>
-		<p>recently viewed</p>
-		<p>popular courses</p>
+		<RecentlyViewed />
+		<PopularCourses />
 	</Aside>
 </PageContainer>

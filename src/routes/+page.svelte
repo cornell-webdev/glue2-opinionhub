@@ -2,6 +2,8 @@
 	import Aside from '$lib/components/glue/Aside.svelte';
 	import Main from '$lib/components/glue/Main.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
+	import PopularCourses from '$lib/components/PopularCourses.svelte';
+	import RecentlyViewed from '$lib/components/RecentlyViewed.svelte';
 	import RecentOpinions from '$lib/components/RecentOpinions.svelte';
 </script>
 
@@ -13,7 +15,7 @@
 	</Main>
 
 	<Aside>
-		<p>recent courses</p>
-		<p>popular courses</p>
+		<RecentlyViewed />
+		<PopularCourses />
 	</Aside>
 </PageContainer>

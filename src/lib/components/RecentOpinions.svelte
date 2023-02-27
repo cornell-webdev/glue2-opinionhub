@@ -10,7 +10,7 @@
 	const fetchComments = async () => {
 		try {
 			const fetchedComments = (
-				await pb.collection('comments').getList(page, 20, {
+				await pb.collection('comments').getList(page, 5, {
 					sort: '-providerCreated',
 					expand: 'course'
 				})
