@@ -33,7 +33,7 @@
 	});
 </script>
 
-<div class="space-y-2">
+<div class="sticky top-20 space-y-2">
 	<h1 class="ml-1 text-2xl font-bold">Most viewed</h1>
 	<div class="space-y-2">
 		{#each courses as course (course?.id)}
