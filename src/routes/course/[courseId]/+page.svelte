@@ -5,7 +5,6 @@
 	import Main from '$lib/components/glue/Main.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 	import MostViewed from '$lib/components/MostViewed.svelte';
-	import RecentlyViewed from '$lib/components/RecentlyViewed.svelte';
 	import ReviewContent from '$lib/components/ReviewContent.svelte';
 	import { pb } from '$lib/glue/pocketbase';
 
