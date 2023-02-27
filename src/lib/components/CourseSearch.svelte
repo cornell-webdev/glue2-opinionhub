@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
 	import { pb } from '$lib/glue/pocketbase';
 	import TextInput from './glue/TextInput.svelte';
 
 	let suggestedCourses = [];
-	let queryString = dev ? 'cs 2110' : '';
+	let queryString = '';
 
 	const fetchSuggestedCourses = async (queryString: string) => {
 		if (!queryString) return;
-		const res = await pb.collection('courses').getList(1, 5, {
-			filter: `name~"${queryString}" || aliases~"${queryString}"`
-		});
-		suggestedCourses = res?.items;
+		try {
+			const res = await pb.collection('courses').getList(1, 5, {
+				filter: `name~"${queryString}" || aliases~"${queryString}"`
+			});
+			suggestedCourses = res?.items;
+		} catch (error) {}
 	};
-
-	$: fetchSuggestedCourses(queryString);
 </script>
 
 <div class="dropdown w-full">
@@ -23,6 +22,9 @@
 	>
 		<TextInput
 			bind:value={queryString}
+			on:input={(event) => {
+				fetchSuggestedCourses(event?.target?.value);
+			}}
 			tabindex={0}
 			class="rounded-full"
 			placeholder="Search for a course"
