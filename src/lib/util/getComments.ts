@@ -19,7 +19,8 @@ const getComments = async ({ course }: IScrapeCommentsByQuery) => {
 		if (!course) return null;
 
 		const comments = await pb.collection('comments').getFullList(200, {
-			filter: `course="${course?.id}"`
+			filter: `course="${course?.id}"`,
+			expand: 'user'
 		});
 
 		// if comments exist, return them

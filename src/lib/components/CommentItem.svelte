@@ -8,6 +8,13 @@
 	export let comment;
 	export let isShowCourse = false;
 
+	$: stars = comment?.sentimentScore
+		? sentimentToStars({
+				sentimentScore: comment?.sentimentScore,
+				sentimentMagnitude: comment?.sentimentMagnitude
+		  })
+		: comment?.stars;
+
 	let isExpanded = false;
 
 	const toggleHelpfulComment = async (targetComment) => {
@@ -46,22 +53,20 @@
 
 						<!-- rating -->
 						<div class="rating rating-sm">
-							{#each [1, 2, 3, 4, 5] as stars}
+							{#each [1, 2, 3, 4, 5] as starsValue}
 								<input
 									type="radio"
 									name={`comment-rating-${comment?.id}`}
 									class="mask mask-star-2 bg-yellow-400"
-									checked={stars ===
-										sentimentToStars({
-											sentimentScore: comment?.sentimentScore,
-											sentimentMagnitude: comment?.sentimentMagnitude
-										})}
+									checked={starsValue === stars}
 								/>
 							{/each}
 						</div>
 
 						<!-- author nickname -->
-						<p class="text-sm text-base-content/80">{comment?.providerData?.author}</p>
+						<p class="text-sm text-base-content/80">
+							{comment?.expand?.user?.nickname || comment?.providerData?.author}
+						</p>
 					</div>
 				</div>
 				<p
@@ -77,7 +82,7 @@
 				<div class="flex items-center justify-end space-x-3">
 					<div>
 						<p class="text-sm text-base-content/80">
-							{formatDistanceToNowStrict(new Date(comment?.providerCreated))} ago
+							{formatDistanceToNowStrict(new Date(comment?.providerCreated || comment?.created))} ago
 						</p>
 					</div>
 					<RequireAuthButton

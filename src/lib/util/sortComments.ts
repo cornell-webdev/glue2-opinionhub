@@ -2,8 +2,8 @@ const sortComments = ({ comments, sort }) => {
 	switch (sort) {
 		case 'recent': {
 			return comments?.sort((a, b) => {
-				const aTime = new Date(a?.providerCreated)?.getTime();
-				const bTime = new Date(b?.providerCreated)?.getTime();
+				const aTime = new Date(a?.providerCreated || a?.created)?.getTime();
+				const bTime = new Date(b?.providerCreated || b?.created)?.getTime();
 				return bTime - aTime;
 			});
 		}

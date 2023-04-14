@@ -12,7 +12,7 @@
 
 	export let course;
 
-	let sort = 'helpful';
+	let sort = 'recent';
 	const sortOptions = ['helpful', 'recent'];
 	let comments = [];
 	let isExpanded = false;
@@ -91,22 +91,6 @@
 	$: updateCommentsSort(sort);
 	$: updateStarCounter(comments);
 	$: updateStarsTrend(comments);
-
-	// TODO: helpful feature
-	// let userCommentIdToHelpfulId = {};
-
-	// const fetchUserHelpfulCommentIds = async () => {
-	// 	const helpfuls = await pb.collection('users_comments_helpful').getFullList(200, {
-	// 		filter: `user="${$currentUser?.id}"`
-	// 	});
-	// 	helpfuls?.forEach((helpful) => {
-	// 		userCommentIdToHelpfulId[helpful?.comment] = helpful?.id;
-	// 	});
-	// };
-
-	// onMount(() => {
-	// 	fetchUserHelpfulCommentIds();
-	// });
 </script>
 
 <svelte:window bind:innerWidth />
@@ -165,7 +149,7 @@
 		<div class="space-y-6">
 			<div class="flex items-center justify-between">
 				<h2 class="text-lg font-bold">All opinions</h2>
-				<MyOpinionButtonModal />
+				<MyOpinionButtonModal {course} />
 			</div>
 
 			<div>
