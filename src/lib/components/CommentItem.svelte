@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { currentUser } from '$lib/glue/pocketbase';
-	import IconBookmarkOutlined from '$lib/icons/glue/IconBookmarkOutlined.svelte';
+	import { currentUser, pb } from '$lib/glue/pocketbase';
 	import IconUpArrow from '$lib/icons/glue/IconUpArrow.svelte';
 	import sentimentToStars from '$lib/util/sentimentToStars';
 	import { formatDistanceToNowStrict } from 'date-fns';
@@ -11,36 +10,23 @@
 
 	let isExpanded = false;
 
-	// TODO: helpful feature
-	// const toggleHelpfulComment = async (commentId: string) => {
-	// 	if (userCommentIdToHelpfulId[commentId]) {
-	// 		// unmark helpful
-	// 		comments = comments?.map((comment) => {
-	// 			if (comment?.id !== commentId) return comment;
-	// 			return {
-	// 				...comment,
-	// 				helpful: comment?.helpful - 1
-	// 			};
-	// 		});
-	// 		pb.collection('users_comments_helpful').delete(userCommentIdToHelpfulId[commentId]);
-	// 		delete userCommentIdToHelpfulId[commentId];
-	// 	} else {
-	// 		// mark helpful
-	// 		userCommentIdToHelpfulId[commentId] = true;
-	// 		comments = comments?.map((comment) => {
-	// 			if (comment?.id !== commentId) return comment;
-	// 			return {
-	// 				...comment,
-	// 				helpful: comment?.helpful + 1
-	// 			};
-	// 		});
-	// 		const userCommentHelpful = await pb.collection('users_comments_helpful').create({
-	// 			user: $currentUser?.id,
-	// 			comment: commentId
-	// 		});
-	// 		userCommentIdToHelpfulId[commentId] = userCommentHelpful?.id;
-	// 	}
-	// };
+	const toggleHelpfulComment = async (targetComment) => {
+		if ($currentUser?.likedComments?.includes(targetComment?.id)) {
+			await pb.collection('users').update($currentUser?.id, {
+				likedComments: $currentUser?.likedComments?.filter((id) => id !== targetComment?.id)
+			});
+			comment = await pb.collection('comments').update(targetComment?.id, {
+				upvotes: targetComment?.upvotes - 1
+			});
+		} else {
+			await pb.collection('users').update($currentUser?.id, {
+				likedComments: [...$currentUser?.likedComments, targetComment?.id]
+			});
+			comment = await pb.collection('comments').update(targetComment?.id, {
+				upvotes: targetComment?.upvotes + 1
+			});
+		}
+	};
 </script>
 
 {#if comment}
@@ -95,11 +81,16 @@
 						</p>
 					</div>
 					<RequireAuthButton
-						class="btn-success btn-outline btn-xs btn gap-1 rounded-xl"
+						class="btn-success btn-xs btn gap-1 rounded-xl {$currentUser?.likedComments?.includes(
+							comment?.id
+						)
+							? ''
+							: 'btn-outline'}"
 						on:click={() => {
-							toggleHelpfulComment(comment?.id);
+							toggleHelpfulComment(comment);
 						}}
-						><IconUpArrow /> {comment?.upvotes} helpful
+						><IconUpArrow />
+						{comment?.upvotes} helpful
 					</RequireAuthButton>
 				</div>
 			</div>
