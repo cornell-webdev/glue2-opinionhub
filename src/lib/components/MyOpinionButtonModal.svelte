@@ -37,7 +37,13 @@
 	};
 </script>
 
-<label for="modal-my-opinion" class="btn-primary btn-sm btn"><IconAdd /> Add opinion</label>
+{#if $currentUser}
+	<label for="modal-my-opinion" class="btn-primary btn-sm btn"><IconAdd /> Add opinion</label>
+{:else}
+	<label for="modal-auth" class="btn-primary btn-sm btn">
+		<IconAdd /> Add opinion
+	</label>
+{/if}
 
 <input type="checkbox" id="modal-my-opinion" class="modal-toggle" />
 <label for="modal-my-opinion" class="modal cursor-pointer">
